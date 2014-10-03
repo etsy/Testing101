@@ -77,7 +77,7 @@ class JobServer {
             Logger::log_info("Exception during execution: " . $jobException->getMessage());
             return JobResult::FAILED_DURING_RUN;
         }
-        $recentlyRunJobs[] = $job;
+        $this->recentlyRunJobs[] = $job;
         return JobResult::SUCCESS;
     }
 }
