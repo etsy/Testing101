@@ -77,7 +77,7 @@ class JobServer {
             Logger::log_info("Exception during execution: " . $jobException->getMessage());
             return JobResult::FAILED_DURING_RUN;
         }
-        $recentlyRunJobs[] = $job;
+        $this->recentlyRunJobs[] = $job;
         return JobResult::SUCCESS;
     }
 }
@@ -113,7 +113,9 @@ class JobServerTest extends PHPUnit_Framework_TestCase {
 
     public function testRunJob_failsDuringRun() {
         $jobServer = new JobServer();
-        $jobResult = $jobServer->runJob(new FailingTestJob());
+        $job = new FailingTestJob();
+        
+        $jobResult = $jobServer->runJob($job);
         $this->assertTrue($job->jobRan);
         $this->assertEquals(JobResult::FAILED_DURING_RUN, $jobResult);
     }
